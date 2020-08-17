@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/operato-demo",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
