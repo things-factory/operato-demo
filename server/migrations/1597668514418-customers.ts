@@ -22,13 +22,15 @@ const SEED_DOMAIN = [
   }
 ]
 
-const saveUser = async (repository, domain, email, password, userType) => {
+const saveUser = async (repository, domain, email, password, userType, creator) => {
   await repository.save({
     name: userType,
     email,
     password: User.encode(password),
     userType,
-    status: UserStatus.ACTIVATED
+    status: UserStatus.ACTIVATED,
+    updater: creator,
+    creator
   })
 
   var user: User = await repository.findOne({ email })
@@ -42,6 +44,8 @@ export class customers1597668514418 implements MigrationInterface {
     const domainRepo = getRepository(Domain)
     const userRepo = getRepository(User)
 
+    const creator = await userRepo.findOne({ email: 'admin@hatiolab.com' })
+
     return Promise.all(
       SEED_DOMAIN.map(async seed => {
         const { subdomain } = seed
@@ -49,8 +53,8 @@ export class customers1597668514418 implements MigrationInterface {
 
         const domain = await domainRepo.findOne({ subdomain })
 
-        await saveUser(userRepo, domain, `admin@${subdomain}.com`, 'admin', 'admin')
-        await saveUser(userRepo, domain, `user@${subdomain}.com`, 'user', 'user')
+        await saveUser(userRepo, domain, `admin@${subdomain}.com`, 'admin', 'admin', creator)
+        await saveUser(userRepo, domain, `user@${subdomain}.com`, 'user', 'user', creator)
       })
     )
   }
