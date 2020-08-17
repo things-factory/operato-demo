@@ -28,7 +28,7 @@ const saveUser = async (repository, domain, email, password, userType) => {
   await repository.save(user)
 }
 
-export class users1597668579499 implements MigrationInterface {
+export class partners1597668579499 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const domainRepo = getRepository(Domain)
     const userRepo = getRepository(User)
