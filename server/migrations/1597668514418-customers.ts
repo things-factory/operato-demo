@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm'
 
 import { Domain } from '@things-factory/shell'
-import { User } from '@things-factory/auth-base'
+import { User, UserStatus } from '@things-factory/auth-base'
 
 const SEED_DOMAIN = [
   {
@@ -27,7 +27,8 @@ const saveUser = async (repository, domain, email, password, userType) => {
     name: userType,
     email,
     password: User.encode(password),
-    userType
+    userType,
+    status: UserStatus.ACTIVATED
   })
 
   var user: User = await repository.findOne({ email })
