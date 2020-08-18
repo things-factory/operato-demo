@@ -34,7 +34,9 @@ export class applications1597668590474 implements MigrationInterface {
     const roleRepo = getRepository(Role)
     const appRepo = getRepository(Application)
 
-    const [domains] = await domainRepo.findAndCount()
+    const domains = await domainRepo.find({
+      systemFlag: false
+    })
 
     return Promise.all(
       SEED_APP.map(async application => {
